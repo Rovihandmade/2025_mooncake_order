@@ -567,8 +567,8 @@ footer a:hover {
             <nav>
                 <a href="#about">關於我們</a>
                 <a href="#photo-gallery">禮盒照片</a>
-                <a href="#order-info">預購須知</a>
                 <a href="#products">中秋禮盒</a>
+                <a href="#order-info">預購須知</a>
                 <a href="#contact">聯絡我們</a>
             </nav>
             <div class="cart-icon">
@@ -592,7 +592,7 @@ footer a:hover {
             <p>Rovi蘿薇手作烘培堅持手工製作每一份點心，嚴選天然食材，將對烘焙的熱情與對家人的心意揉入其中。在這個中秋佳節，我們希望透過暖心的手作禮盒，為您與摯愛傳遞一份最純粹的祝福與感動。</p>
         </section>
 
-        <!-- 禮盒照片區塊 -->
+        <!-- 相片集區塊 -->
         <section id="photo-gallery" class="section photo-gallery-section container">
             <h2>品味首選：中秋禮盒實拍</h2>
             <div class="gallery-grid">
@@ -832,7 +832,7 @@ function addEventListenersToProducts() {
             let quantity = parseInt(input.value);
             if (e.target.dataset.action === 'increase') {
                 quantity++;
-            } else if (e.target.dataset.action === 'decrease' && quantity > 0) {
+            } else if (e.target.action === 'decrease' && quantity > 0) { // Bug: e.target.action
                 quantity--;
             }
             input.value = quantity;
@@ -1036,7 +1036,6 @@ function generateGoogleFormUrl() {
 
     const googleFormFinalUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/viewform?usp=pp_url${formUrlParams}`;
 
-    console.log('生成的 Google 表單預填網址:', googleFormFinalUrl); // 新增這行
 
     window.location.replace(googleFormFinalUrl);
 }
