@@ -699,7 +699,7 @@ const PRODUCT_QUANTITY_ENTRY_IDS = { // 您的品項數量欄位 ID
     'pure_mung_bean': '2072600674',
     'floss_mung_bean': '179437994',
     'mixed_mung_bean': '1204106198',
-    'mixed_all': '600143959'
+    'mixed_all': '600143959' // 已修正為正確的 ID
 };
 
 // 產品資料 (請根據您的實際品項和價格修改)
@@ -832,7 +832,7 @@ function addEventListenersToProducts() {
             let quantity = parseInt(input.value);
             if (e.target.dataset.action === 'increase') {
                 quantity++;
-            } else if (e.target.action === 'decrease' && quantity > 0) { // Bug: e.target.action
+            } else if (e.target.dataset.action === 'decrease' && quantity > 0) {
                 quantity--;
             }
             input.value = quantity;
@@ -1011,36 +1011,36 @@ function generateGoogleFormUrl() {
         return;
     }
 
-
-    let formUrlParams = '';
-
-
+    // 使用一個物件來儲存每個品項的最終數量，確保每個 entry.ID 只出現一次
+    const quantitiesMap = {};
+    
+    // 1. 初始化所有品項的數量為 0
     for (const productId in PRODUCT_QUANTITY_ENTRY_IDS) {
         const entryId = PRODUCT_QUANTITY_ENTRY_IDS[productId];
-        formUrlParams += `&entry.${entryId}=0`;
+        quantitiesMap[entryId] = 0; // 初始化為 0
     }
 
-
+    // 2. 用購物車中的實際數量來更新這些值
     cart.forEach(item => {
-        const product = products.find(p => p.id === item.productId);
-        if (product) {
-            const entryId = PRODUCT_QUANTITY_ENTRY_IDS[item.productId];
-            if (entryId) {
-                formUrlParams += `&entry.${entryId}=${item.quantity}`;
-            } else {
-                console.warn(`Warning: Missing entry ID for product: ${product.name}`);
-            }
+        const entryId = PRODUCT_QUANTITY_ENTRY_IDS[item.productId];
+        if (entryId) {
+            quantitiesMap[entryId] = item.quantity; // 更新為實際選購數量
+        } else {
+            console.warn(`Warning: Missing entry ID for product ID: ${item.productId}`);
         }
     });
 
+    // 3. 從 quantitiesMap 構建 formUrlParams 字串
+    let formUrlParams = '';
+    for (const entryId in quantitiesMap) {
+        formUrlParams += `&entry.${entryId}=${quantitiesMap[entryId]}`;
+    }
 
     const googleFormFinalUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/viewform?usp=pp_url${formUrlParams}`;
 
-
-    window.location.replace(googleFormFinalUrl);
+    console.log('生成的 Google 表單預填網址:', googleFormFinalUrl); // 重新啟用診斷
+    window.location.replace(googleFormFinalUrl); 
 }
-
-
 
 
 // ====== 事件監聽器 ======
