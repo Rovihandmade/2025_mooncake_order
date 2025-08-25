@@ -566,7 +566,7 @@ footer a:hover {
             <div class="logo">Rovi蘿薇手作烘培</div>
             <nav>
                 <a href="#about">關於我們</a>
-                <a href="#photo-gallery">禮盒實拍</a>
+                <a href="#photo-gallery">禮盒照片</a>
                 <a href="#order-info">預購須知</a>
                 <a href="#products">中秋禮盒</a>
                 <a href="#contact">聯絡我們</a>
@@ -592,7 +592,7 @@ footer a:hover {
             <p>Rovi蘿薇手作烘培堅持手工製作每一份點心，嚴選天然食材，將對烘焙的熱情與對家人的心意揉入其中。在這個中秋佳節，我們希望透過暖心的手作禮盒，為您與摯愛傳遞一份最純粹的祝福與感動。</p>
         </section>
 
-        <!-- 相片集區塊 -->
+        <!-- 禮盒照片區塊 -->
         <section id="photo-gallery" class="section photo-gallery-section container">
             <h2>品味首選：中秋禮盒實拍</h2>
             <div class="gallery-grid">
@@ -671,16 +671,7 @@ footer a:hover {
             <h2>與我們聯繫</h2>
             <p>若有任何疑問或特殊需求，歡迎隨時與我們聯繫！</p>
             <ul>
-                <!-- 目前不顯示電話
-                <li><i class="fas fa-phone"></i> 電話：[您的電話號碼]</li>
-                -->
-
                 <li><i class="fas fa-envelope"></i> Email：rovihandmade@gmail.com</li>
-
-                <!-- 目前不顯示門市地址
-                  <li><i class="fas fa-map-marker-alt"></i> 門市地址：[您的門市地址]</li>
-                -->
-
                 <li><i class="fas fa-clock"></i> 營業時間：每日9:00AM-20:00PM</li>
             </ul>
             <div class="social-links">
@@ -697,7 +688,7 @@ footer a:hover {
         </div>
     </footer>
 
-    <!-- JavaScript 程式碼 (直接內嵌，已修正) -->
+    <!-- JavaScript 程式碼 (直接內嵌，已修正所有問題) -->
     <script>
 // 將 GOOGLE_FORM_ID 和 PRODUCT_QUANTITY_ENTRY_IDS 直接在這裡定義 (硬編碼)
 const GOOGLE_FORM_ID = '1FAIpQLSeEyB2hoKkuFdFzjPW34Z4X57UB1yXg5fjashv5bCn96gfeAA'; // 您的 Google 表單 ID
@@ -774,8 +765,8 @@ const products = [
 // 購物車
 let cart = [];
 
-// DOM 元素
-let productList; // 定義為 let，確保在 DOMContentLoaded 後賦值
+// DOM 元素 (先用 let 宣告，在 DOMContentLoaded 後賦值)
+let productList;
 let cartCountSpan;
 let cartSummarySection;
 let cartItemsDisplay;
@@ -908,11 +899,11 @@ function calculateCartTotal() {
 
 
 function renderCartItems() {
-    if (!cartItemsDisplay) { // 確保元素已存在
+    if (!cartItemsDisplay) { 
         console.error('Error: #cart-items-display element not found.');
         return;
     }
-    if (!cartSummarySection) { // 確保元素已存在
+    if (!cartSummarySection) { 
         console.error('Error: #cart-summary-section element not found.');
         return;
     }
@@ -985,17 +976,16 @@ function renderCartItems() {
 
 
 function updateCartDisplay() {
-    // 【修正 JavaScript 語法錯誤】
-    if (!cartCountSpan) { // 確保元素已存在
+    if (!cartCountSpan) { 
         console.error('Error: #cart-count element not found.');
         return;
     }
-    if (!cartTotalAmountSpan) { // 確保元素已存在
+    if (!cartTotalAmountSpan) { 
         console.error('Error: #cart-total-amount element not found.');
         return;
     }
     
-    cartCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); // 修正了括號
+    cartCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); 
     cartTotalAmountSpan.textContent = `$${calculateCartTotal()}`;
     renderCartItems();
 
@@ -1046,6 +1036,7 @@ function generateGoogleFormUrl() {
 
     const googleFormFinalUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/viewform?usp=pp_url${formUrlParams}`;
 
+    console.log('生成的 Google 表單預填網址:', googleFormFinalUrl); // 新增這行
 
     window.location.replace(googleFormFinalUrl);
 }
@@ -1058,7 +1049,7 @@ function generateGoogleFormUrl() {
 
 document.addEventListener('DOMContentLoaded', () => {
     try {
-        // 確保 DOM 元素在載入後再獲取
+        // 在 DOMContentLoaded 內部獲取所有 DOM 元素，確保它們已經存在
         productList = document.getElementById('product-list');
         cartCountSpan = document.getElementById('cart-count');
         cartSummarySection = document.getElementById('cart-summary-section');
@@ -1068,28 +1059,38 @@ document.addEventListener('DOMContentLoaded', () => {
         clearCartBtn = document.getElementById('clear-cart-btn');
         cartIcon = document.querySelector('.cart-icon');
 
+
+        // 確保按鈕元素存在後再綁定事件
+        if (proceedToFormBtn) {
+            proceedToFormBtn.addEventListener('click', generateGoogleFormUrl);
+        } else {
+            console.error('Error: #proceed-to-form-btn not found. Cannot bind click event.');
+        }
+        if (clearCartBtn) {
+            clearCartBtn.addEventListener('click', clearCart);
+        } else {
+            console.error('Error: #clear-cart-btn not found. Cannot bind click event.');
+        }
+        if (cartIcon) {
+             cartIcon.addEventListener('click', () => {
+                if (cart.length > 0) {
+                    cartSummarySection.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    alert('您的購物車是空的，請先選擇商品！');
+                }
+            });
+        } else {
+            console.error('Error: .cart-icon not found. Cannot bind click event.');
+        }
+
+
         renderProducts();
-        updateCartDisplay();
+        updateCartDisplay(); 
     } catch (e) {
         console.error('Error during initial product rendering or cart display:', e);
         alert('網頁載入發生錯誤，請稍後再試。錯誤訊息：' + e.message);
     }
 });
-
-
-cartIcon.addEventListener('click', () => {
-    if (cart.length > 0) {
-        cartSummarySection.scrollIntoView({ behavior: 'smooth' });
-    } else {
-        alert('您的購物車是空的，請先選擇商品！');
-    }
-});
-
-
-proceedToFormBtn.addEventListener('click', generateGoogleFormUrl);
-
-
-clearCartBtn.addEventListener('click', clearCart);
     </script>
 </body>
 </html>
