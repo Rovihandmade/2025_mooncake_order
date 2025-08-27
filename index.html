@@ -222,9 +222,13 @@ nav a:hover {
 
 .gallery-item img {
     width: 100%;
-    height: 200px; /* 固定圖片高度 */
-    object-fit: cover; /* 確保圖片不變形填滿容器 */
-    display: block; /* 移除圖片底部多餘空間 */
+    /* 移除固定的 height: 200px; 讓高度按比例縮放 */
+    height: auto; /* 讓高度自動適應 */
+    max-height: 250px; /* 設置一個最大高度，防止圖片過高 */
+    object-fit: contain; /* 確保圖片完整顯示，不裁切，可能會有留白 */
+    display: block; 
+    /* 【新增】讓圖片在容器中垂直居中，如果有留白也比較美觀 */
+    margin: 0 auto;
 }
 
 .gallery-item p {
@@ -557,6 +561,72 @@ footer a:hover {
     display: none !important;
     opacity: 0 !important;
 }
+
+/* 新增產品卡片圖片容器樣式 */
+.product-image-container {
+    width: 100%;
+    height: 180px; /* 固定圖片容器高度 */
+    overflow: hidden;
+    margin-bottom: 15px; /* 與下方文字內容間隔 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8; /* 圖片載入前的背景色 */
+}
+
+.product-image-container img {
+    width: 100%;
+    height: 100%; /* 讓圖片填滿容器 */
+    object-fit: contain; /* 確保圖片完整顯示，不裁切，可能會有留白 */
+    display: block;
+}
+
+/* 新增產品卡片無圖片佔位符樣式 */
+.product-image-placeholder {
+    width: 100%;
+    height: 180px; /* 與圖片容器高度相同 */
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #888;
+    font-size: 0.9em;
+    padding: 15px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    border: 1px dashed #ccc;
+}
+.product-image-placeholder h3 {
+    color: #5a4b40;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+.product-image-placeholder p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+/* 包裹產品文字內容的 div */
+.product-card .product-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1; /* 讓內容佔滿剩餘空間 */
+    padding: 0 15px 15px; /* 調整內邊距 */
+}
+.product-card h3,
+.product-card .description,
+.product-card .price {
+    padding: 0; /* 移除 product-card 內部的 padding */
+    margin-left: 0;
+    margin-right: 0;
+}
+.product-card {
+    padding: 0; /* 移除最外層 product-card 的 padding，改為由 product-content 控制 */
+}
+        
     </style>
 </head>
 <body>
@@ -567,8 +637,8 @@ footer a:hover {
             <nav>
                 <a href="#about">關於我們</a>
                 <a href="#photo-gallery">禮盒款式</a>
-                <a href="#products">中秋禮盒</a>
                 <a href="#order-info">預購須知</a>
+                <a href="#products">品項介紹</a>
                 <a href="#contact">聯絡我們</a>
             </nav>
             <div class="cart-icon">
@@ -594,8 +664,8 @@ footer a:hover {
 
         <!-- 相片集區塊 -->
         <section id="photo-gallery" class="section photo-gallery-section container">
-            <h2>2025中秋禮盒款式</h2>
-            <p>主打4款禮盒，數量有限，將依照預購順位提供主打款式</p>
+            <h2>2025年禮盒款式</h2>
+            <p>主打4款手提禮盒，數量有限，將依照預購順位優先出貨</p>
             <div class="gallery-grid">
                 <div class="gallery-item">
                     <img src="https://i.postimg.cc/pTp0k0Sh/image.jpg" alt="2025年禮盒款式1"> <!-- 請替換 -->
@@ -615,19 +685,19 @@ footer a:hover {
                 </div>
                 <div class="gallery-item">
                     <img src="https://i.postimg.cc/MTx1gKV7/image.jpg" alt=" "> <!-- 請替換 -->
-              <!--       <p> </p>  -->
+                <p>產品展示1</p>
                 </div>
                 <div class="gallery-item">
                     <img src="https://i.postimg.cc/sxg7D6n1/image.jpg" alt=" "> <!-- 請替換 -->
-              <!--       <p> </p>  -->
+                <p>產品展示2</p>
                 </div>
                 <div class="gallery-item">
                     <img src="https://i.postimg.cc/htkLb0G3/image.jpg" alt=" "> <!-- 請替換 -->
-              <!--       <p> </p>  -->
+                <p>產品展示3</p>
                 </div>
                 <div class="gallery-item">
                     <img src="https://i.postimg.cc/tJvP13fk/image.jpg" alt=" "> <!-- 請替換 -->
-              <!--       <p> </p>  -->
+                <p>產品展示4</p>
                 </div>
             </div>
         </section>
@@ -727,6 +797,7 @@ const products = [
         originalPrice: 390,
         specialPrice: 360,
         description: '綿密醇厚的烏豆沙，完美包覆油潤鹹香的金黃鹹蛋黃，甜鹹交織的經典滋味。',
+        image: 'https://i.postimg.cc/YOUR_UODOUSHA_IMAGE_ID.jpg', // 【新增/修改】請替換為 Imgur/Postimages 直接連結
         unit: '盒'
     },
     {
@@ -735,6 +806,7 @@ const products = [
         originalPrice: 390,
         specialPrice: 360, 
         description: '細緻清甜的綠豆沙，搭配飽滿鹹蛋黃，口感清新不膩，蛋黃酥愛好者的雅致之選，經典熱銷！',
+        image: 'https://i.postimg.cc/YOUR_GREENDOUSHA_IMAGE_ID.jpg', // 【新增/修改】請替換
         unit: '盒'
     },
     {
@@ -743,6 +815,7 @@ const products = [
         originalPrice: 390,
         specialPrice: 360,
         description: '烏豆沙、綠豆沙各3入，一次品嚐兩種風味，滿足不同喜好，是雙重美味的絕佳選擇。',
+        image: 'https://i.postimg.cc/YOUR_MIXED_EGG_YOLK_IMAGE_ID.jpg', // 【新增/修改】即使是綜合，也放一張代表性圖片
         unit: '盒'
     },
     {
@@ -751,6 +824,7 @@ const products = [
         originalPrice: 360,
         specialPrice: 330,
         description: '懷舊古早味，層層酥鬆餅皮，綠豆沙入口即化，選擇減糖配方，甜而不膩。',
+        image: 'https://i.postimg.cc/YOUR_PURE_MUNG_BEAN_IMAGE_ID.jpg', // 【新增/修改】請替換
         unit: '盒'
     },
     {
@@ -759,6 +833,7 @@ const products = [
         originalPrice: 390,
         specialPrice: 360,
         description: '獨特鹹香，香酥肉鬆與細緻綠豆沙的巧妙結合，鹹甜交織，口感豐富令人回味。',
+        image: 'https://i.postimg.cc/YOUR_FLOSS_MUNG_BEAN_IMAGE_ID.jpg', // 【新增/修改】請替換
         unit: '盒'
     },
     {
@@ -767,6 +842,7 @@ const products = [
         name: '綜合綠豆椪',
         specialPrice: 345,
         description: '純綠豆、肉鬆各3入，純粹與創新的搭配，一次擁有兩種經典綠豆椪風味。',
+        image: 'https://i.postimg.cc/YOUR_MIXED_MUNG_BEAN_IMAGE_ID.jpg', // 【新增/修改】
         unit: '盒'
     },
     {
@@ -775,6 +851,7 @@ const products = [
         originalPrice: 390,
         specialPrice: 360,
         description: '圓滿推薦！精選烏豆沙蛋黃酥、綠豆沙蛋黃酥及肉鬆綠豆椪各2入，一次滿足您的所有渴望。',
+        image: 'https://i.postimg.cc/YOUR_MIXED_ALL_IMAGE_ID.jpg', // 【新增/修改】
         unit: '盒'
     }
 ];
@@ -802,33 +879,37 @@ function renderProducts() {
         return;
     }
 
-
     productList.innerHTML = '';
     products.forEach(product => {
-        // 判斷是否為預購優惠價 (如果特價低於原價)
         const isSpecialOffer = product.specialPrice < product.originalPrice;
         const specialPricePrefix = isSpecialOffer ? '預購優惠價 ' : '';
 
+        // 【核心修改】判斷是否有圖片，然後生成對應的 HTML
+        const productImageHtml = product.image ?
+            `<div class="product-image-container"><img src="${product.image}" alt="${product.name}"></div>` :
+            `<div class="product-image-placeholder"><h3>${product.name}</h3><p>圖片待補 / 綜合口味示意</p></div>`;
 
         const productCard = document.createElement('div');
         productCard.classList.add('product-card');
         productCard.innerHTML = `
-            <h3>${product.name}</h3>
-            <p class="description">${product.description}</p>
-            <p class="price">
-                <span class="original-price">${isSpecialOffer ? '$' + product.originalPrice : ''}</span>
-                <span class="special-price">${specialPricePrefix}$${product.specialPrice}</span>
-            </p>
-            <div class="quantity-control">
-                <button data-id="${product.id}" data-action="decrease">-</button>
-                <input type="number" value="0" min="0" data-id="${product.id}" class="product-quantity-input">
-                <button data-id="${product.id}" data-action="increase">+</button>
+            ${productImageHtml} <!-- 在這裡插入圖片或佔位符 -->
+            <div class="product-content"> <!-- 新增一個 div 包裹文字內容 -->
+                <h3>${product.name}</h3>
+                <p class="description">${product.description}</p>
+                <p class="price">
+                    <span class="original-price">${isSpecialOffer ? '$' + product.originalPrice : ''}</span>
+                    <span class="special-price">${specialPricePrefix}$${product.specialPrice}</span>
+                </p>
+                <div class="quantity-control">
+                    <button data-id="${product.id}" data-action="decrease">-</button>
+                    <input type="number" value="0" min="0" data-id="${product.id}" class="product-quantity-input">
+                    <button data-id="${product.id}" data-action="increase">+</button>
+                </div>
+                <button class="btn primary-btn add-to-cart-btn" data-id="${product.id}">加入購物車</button>
             </div>
-            <button class="btn primary-btn add-to-cart-btn" data-id="${product.id}">加入購物車</button>
         `;
         productList.appendChild(productCard);
     });
-
 
     addEventListenersToProducts();
 }
@@ -1110,3 +1191,4 @@ document.addEventListener('DOMContentLoaded', () => {
     </script>
 </body>
 </html>
+
