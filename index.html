@@ -214,11 +214,13 @@ nav a:hover {
     overflow: hidden;
     text-align: center;
     transition: transform 0.3s ease-in-out;
-    height: 300px; /* 【保持】給 gallery-item 一個固定的高度，確保卡片大小統一 */
-    display: flex; /* 【修改】啟用 Flexbox 佈局 */
-    flex-direction: column; /* 【修改】讓子元素垂直排列 */
-    justify-content: space-between; /* 【修改】圖片和文字內容在垂直方向上兩端對齊 */
-    align-items: center; /* 【修改】讓圖片和文字在水平方向上居中 */
+    height: 300px; /* 保持 gallery-item 的固定高度 */
+    display: flex; 
+    flex-direction: column; 
+    /* 【核心修改】將 justify-content 改為 center，讓所有內容（圖片和文字）在容器中垂直居中 */
+    justify-content: center; 
+    align-items: center; /* 讓內容水平居中 */
+    gap: 5px; /* 【新增】在圖片和文字之間增加一點間距 */
 }
 
 .gallery-item:hover {
@@ -673,7 +675,7 @@ footer a:hover {
             <div class="gallery-grid">
                 <div class="gallery-item">
                     <img src="https://i.postimg.cc/pTp0k0Sh/image.jpg" alt="2025年禮盒款式1"> <!-- 請替換 -->
-                    <p>2款式1</p>
+                    <p>款式1</p>
                 </div>
                 <div class="gallery-item">
                     <img src="https://i.postimg.cc/KjT0h1xm/image.jpg" alt="2025年禮盒款式2"> <!-- 請替換 -->
@@ -1195,5 +1197,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </script>
 </body>
 </html>
+
 
 
