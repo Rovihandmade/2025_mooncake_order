@@ -220,7 +220,7 @@ nav a:hover {
     /* 【核心修改】將 justify-content 改為 center，讓所有內容（圖片和文字）在容器中垂直居中 */
     justify-content: center; 
     align-items: center; /* 讓內容水平居中 */
-    gap: 5px; /* 【新增】在圖片和文字之間增加一點間距 */
+    gap: 10px; /* 【新增】在圖片和文字之間增加一點間距 */
 }
 
 .gallery-item:hover {
@@ -230,7 +230,7 @@ nav a:hover {
 .gallery-item img {
     width: 100%;
     height: auto; /* 【修改】讓高度自動適應 */
-    max-height: 250px; /* 【修改】設置一個最大高度，防止圖片過高 */
+    max-height: 220px; /*【優化】調整最大高度，給下方文字更多空間，確保居中效果 */
     object-fit: contain; /* 【修改】確保圖片完整顯示，不裁切，可能會有留白 */
     display: block; 
     margin: 0 auto; /* 【新增】水平居中 */
@@ -238,7 +238,7 @@ nav a:hover {
 }
 
 .gallery-item p {
-    padding: 15px;
+    padding: 0 15px 15px; /* 【優化】調整下方文字的內邊距，使其在卡片底部 */
     font-size: 1.05em;
     color: #5a4b40;
     font-weight: 500;
@@ -266,7 +266,8 @@ nav a:hover {
     padding: 25px; /* 增加整體內邊距 */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* 均勻分佈內容 */
+    justify-content: space-between; /* 均勻分佈內容 */    
+    min-height: 320px; /* 【新增】給產品卡片一個最小高度，讓所有卡片看起來更統一 */
 }
 
 .product-card h3 {
@@ -302,6 +303,86 @@ nav a:hover {
     font-size: 0.9em; /* 相對縮小原價 */
     margin-right: 8px;
 }
+
+.product-card .special-price {
+    color: #e6b268; /* 【優化】讓特價更顯眼 */
+    font-size: 1.6em; /* 【優化】特價字體稍大 */
+    font-weight: 900; /* 【優化】特價字體更粗 */
+}
+
+/* 【新增】顧客好評區塊樣式 */
+.testimonials-section {
+    background-color: #fdfaf5;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.testimonial-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    text-align: left;
+    position: relative;
+    font-style: italic;
+    color: #555;
+    min-height: 150px; /* 保證卡片高度 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.testimonial-card::before {
+    content: "“";
+    font-size: 3em;
+    color: #e6b268;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    line-height: 0.5;
+}
+.testimonial-card p {
+    font-size: 1.05em;
+    margin-top: 20px; /* 留出空間給引號 */
+}
+.testimonial-card .author {
+    font-weight: 700;
+    color: #5a4b40;
+    margin-top: 15px;
+    text-align: right;
+    font-style: normal;
+}
+
+/* 【新增】FAQ 區塊樣式 */
+.faq-section {
+    background-color: #f8f5ee;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.faq-item {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    text-align: left;
+}
+.faq-item h3 {
+    color: #5a4b40;
+    margin-bottom: 10px;
+}
+.faq-item p {
+    color: #555;
+    margin-bottom: 0;
+}
+
 
 .quantity-control {
     margin-bottom: 20px; /* 增加間距 */
@@ -632,6 +713,79 @@ footer a:hover {
 .product-card {
     padding: 0; /* 移除最外層 product-card 的 padding，改為由 product-content 控制 */
 }
+
+/* 新增：已額滿日期顯示區塊樣式 */
+.sold-out-dates-container {
+    background-color: #fff9f9; /* 淺紅色背景，提醒作用 */
+    border: 1px solid #ffcccc; /* 淺紅色邊框 */
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px auto;
+    max-width: 600px; /* 限制寬度，使其更像一個提示框 */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    text-align: left;
+}
+
+.sold-out-dates-title {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #e65353; /* 紅色，強調「額滿」 */
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.sold-out-dates-list {
+    list-style: none; /* 移除列表點 */
+    padding: 0;
+    margin: 0 0 15px 0;
+    display: flex; /* 讓日期橫向排列 */
+    flex-wrap: wrap; /* 超出寬度自動換行 */
+    gap: 10px; /* 日期之間的間距 */
+    justify-content: center; /* 橫向居中 */
+}
+
+.sold-out-dates-list li {
+    background-color: #ffdddd; /* 更深的紅色背景，突出每個日期 */
+    color: #a00; /* 深紅色文字 */
+    font-weight: 700;
+    padding: 8px 15px;
+    border-radius: 5px;
+    white-space: nowrap; /* 防止日期換行 */
+    font-size: 1.1em;
+}
+
+.sold-out-dates-cta {
+    font-size: 1em;
+    color: #666;
+    margin-top: 15px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* 在小螢幕上調整 */
+@media (max-width: 480px) {
+    .sold-out-dates-container {
+        padding: 15px;
+    }
+    .sold-out-dates-title {
+        font-size: 1.2em;
+    }
+    .sold-out-dates-list li {
+        font-size: 1em;
+        padding: 6px 10px;
+    }
+}
+
+
+/* 新增產品成分樣式 */
+.product-card .ingredients {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: -10px; /* 稍微向上調整，與描述靠近 */
+    margin-bottom: 15px; /* 與價格間隔 */
+    padding: 0;
+    line-height: 1.4;
+}
         
     </style>
 </head>
@@ -639,12 +793,13 @@ footer a:hover {
 
     <header>
         <div class="container header-content">
-            <div class="logo">Rovi蘿薇手作烘培</div>
+            <div class="logo">Rovi蘿薇手作烘焙</div>
             <nav>
                 <a href="#about">關於我們</a>
                 <a href="#photo-gallery">禮盒款式</a>
                 <a href="#order-info">預購須知</a>
                 <a href="#products">品項介紹</a>
+                <a href="#FAQ area">常見問題</a>
                 <a href="#contact">聯絡我們</a>
             </nav>
             <div class="cart-icon">
@@ -665,8 +820,14 @@ footer a:hover {
 
         <section id="about" class="section about-section container">
             <h2>手作的溫度，家的心意</h2>
-            <p>Rovi蘿薇手作烘培堅持手工製作每一份點心，嚴選天然食材，將對烘焙的熱情與對家人的心意揉入其中。在這個中秋佳節，我們希望透過暖心的手作禮盒，為您與摯愛傳遞一份最純粹的祝福與感動。</p>
+            <p>Rovi蘿薇手作烘焙堅持手工製作每一份點心，嚴選食材，將對烘焙的熱情與對家人的心意揉入其中，希望將這份家的溫暖傳遞給每個人。</p>
+            <p>我們相信，每一份甜點都承載著故事與情感，特別在這個中秋佳節，更是凝聚思念的媒介。</p>
+            <p>每一顆蛋黃酥都傾注了匠人般的堅持，每日現敲新鮮紅土鹹鴨蛋，取出渾圓飽滿的鹹蛋黃後，細心烘烤至金黃噴香，</p>
+            <p>再將其完美包覆進層次分明的酥皮與綿密豆沙內。</p>
+            <p>利用當日現榨的火龍果汁去點綴綠豆椪層層酥鬆餅皮，這些堅持皆是為了讓您每一口都能品嚐到最純粹、最令人感動的極致美味與安心。</p>
+            <p>Rovi蘿薇，以手心的溫度，烘焙滿月的祝福，透過暖心的手作禮盒，為您與摯愛傳遞一份最純粹的祝福與感動。</p>
         </section>
+
 
         <!-- 相片集區塊 -->
         <section id="photo-gallery" class="section photo-gallery-section container">
@@ -674,20 +835,20 @@ footer a:hover {
             <p>主打4款手提禮盒，數量有限，將依照預購順位優先出貨</p>
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="https://i.postimg.cc/pTp0k0Sh/image.jpg" alt="2025年禮盒款式1"> <!-- 請替換 -->
-                    <p>款式1</p>
+                    <img src="https://i.postimg.cc/pTp0k0Sh/image.jpg" alt="手提禮盒款式1"> <!-- 請替換 -->
+                    <p>手提禮盒款式1</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.postimg.cc/KjT0h1xm/image.jpg" alt="2025年禮盒款式2"> <!-- 請替換 -->
-                    <p>款式2</p>
+                    <img src="https://i.postimg.cc/KjT0h1xm/image.jpg" alt="手提禮盒款式2"> <!-- 請替換 -->
+                    <p>手提禮盒款式2</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.postimg.cc/05KWwBmh/V1.png" alt="2025年禮盒款式3"> <!-- 請替換 -->
-                    <p>款式3</p>
+                    <img src="https://i.postimg.cc/05KWwBmh/V1.png" alt="手提禮盒款式3"> <!-- 請替換 -->
+                    <p>手提禮盒款式3</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://i.postimg.cc/nzg3W48d/image.jpgg" alt="2025年禮盒款式4"> <!-- 請替換 -->
-                    <p>款式4</p>
+                    <img src="https://i.postimg.cc/nzg3W48d/image.jpgg" alt="手提禮盒款式4"> <!-- 請替換 -->
+                    <p>手提禮盒款式4</p>
                 </div>
                 <div class="gallery-item">
                     <img src="https://i.postimg.cc/MTx1gKV7/image.jpg" alt=" "> <!-- 請替換 -->
@@ -706,14 +867,33 @@ footer a:hover {
                 <p>產品展示4</p>
                 </div>
             </div>
+            <a href="#products" class="btn primary-btn" style="margin-top: 40px;">前往選購中秋禮盒</a> <!-- 【新增】CTA -->
         </section>
 
         <section id="order-info" class="section order-info-section container">
             <h2>中秋預購須知</h2>
             <p class="note">
-                手工製作數量有限，為確保品質。<br>
-                **請務必參考 Google 訂購表單中「面交/寄出日期」問題旁的【每日額度說明】，以便選擇日期。**
-            </p>
+                手工製作數量有限，為確保品質，<br>
+                提醒您，以下日期**已額滿無法訂購**，請避免選擇：
+            </p> 
+            <!-- 【新增】已額滿日期顯示區塊 -->
+            <div class="sold-out-dates-container">
+                <p class="sold-out-dates-title">❌ 已額滿日期：</p>
+                <ul class="sold-out-dates-list">
+                    <li>2025/9/11(四) </li>
+                    <li>2025/9/21(日) </li>
+                    <li>2025/9/22(一) </li>
+                    <li>2025/9/25(四) </li>
+                    <li>2025/9/26(五) </li>
+                    <!-- 您需要手動更新這裡，添加已額滿的日期 -->
+                    <!-- 例如：<li>9/10 (三) - 額滿</li> -->
+                </ul>
+                <p class="sold-out-dates-cta">
+                    其他日期額度有限，請務必確認購物車數量後點擊下方按鈕進入 Google 表單，
+                    並參考「面交/寄出日期」問題旁的【每日額度說明】，以便選擇日期。
+                </p>
+            </div>
+
             <div class="info-blocks">
                 <div class="info-block">
                     <h3>預購期間</h3>
@@ -723,8 +903,10 @@ footer a:hover {
                 <div class="info-block">
                     <h3>付款方式</h3>
                     <ul>
-                        <li>轉帳匯款：於提交訂單後，匯款帳號將於訂單確認信中提供，並請於24小時內完成匯款，謝謝。</li>
+                        <li>轉帳匯款：匯款帳號將於訂單確認信中提供。</li>
                         <li>LINE PAY轉帳：須加LINE好友。</li>
+                        <li>請於收到訂單確認信後24小時內完成匯款，謝謝</li>
+
                     </ul>
                 </div>
                 <div class="info-block">
@@ -740,7 +922,7 @@ footer a:hover {
         </section>
 
         <section id="products" class="section products-section container">
-            <h2>Rovi蘿薇手作烘培 2025 中秋禮盒系列</h2>
+            <h2>Rovi蘿薇手作烘焙 2025 中秋禮盒系列</h2>
             <p class="section-description">品味經典，探索新意。多款中秋限定手作烘焙，滿足您對佳節美味的所有期待。</p>
 
             <div class="product-grid" id="product-list">
@@ -758,6 +940,24 @@ footer a:hover {
             </div>
             <button id="proceed-to-form-btn" class="btn primary-btn">確認訂單，前往Google表單填寫資訊</button>
             <button id="clear-cart-btn" class="btn secondary-btn">清空購物車</button>
+        </section>
+
+
+<!-- 【新增】FAQ 區塊 -->
+        <section id="FAQ area" class="section faq-section container">
+            <h2>常見問題</h2>
+            <div class="faq-item">
+                <h3>Q: 禮盒的保存期限和保存方式？</h3>
+                <p>A: 中秋禮盒皆為手工製作，無添加防腐劑。常溫保存可保存2週，開封後請盡速食用，以保持新鮮美味；冷藏保存，可保存1個月，建議利用烤箱、微波加熱後再食用。</p>
+            </div>
+            <div class="faq-item">
+                <h3>Q: 如何知道我的訂單是否成立？</h3>
+                <p>A: 提交訂單後，我們將於24小時內發送訂單確認信至您的Email或LINE，內含詳細訂購內容及匯款資訊。請於期限內完成匯款，逾期將自動取消訂單，謝謝。</p>
+            </div>
+            <div class="faq-item">
+                <h3>Q: 是否提供客製化或大量訂購優惠？</h3>
+                <p>A: 若有企業贈禮或大量訂購需求，歡迎直接透過Email聯繫我們，將有專人為您服務。</p>
+            </div>
         </section>
 
         <section id="contact" class="section contact-section container">
@@ -804,6 +1004,7 @@ const products = [
         specialPrice: 360,
         description: '綿密醇厚的烏豆沙，完美包覆油潤鹹香的金黃鹹蛋黃，甜鹹交織的經典滋味。',
         image: 'https://i.postimg.cc/wTP4Jktf/v1.png', // 【新增/修改】請替換為 Imgur/Postimages 直接連結
+        ingredients: '烏豆沙、蛋黃、麵粉、安佳無水奶油、鮮奶油、糖、黑芝麻 (每顆淨重 65g ± 3g)', // 【新增】主要成分
         unit: '盒'
     },
     {
@@ -813,6 +1014,7 @@ const products = [
         specialPrice: 360, 
         description: '細緻清甜的綠豆沙，搭配飽滿鹹蛋黃，口感清新不膩，蛋黃酥愛好者的雅致之選，經典熱銷！',
         image: 'https://i.postimg.cc/rpGfBXf3/v2.png', // 【新增/修改】請替換
+        ingredients: '綠豆沙、蛋黃、麵粉、安佳無水奶油、鮮奶油、糖、白芝麻 (每顆淨重 65g ± 3g)', // 【新增】主要成分
         unit: '盒'
     },
     {
@@ -822,6 +1024,7 @@ const products = [
         specialPrice: 360,
         description: '烏豆沙、綠豆沙各3入，一次品嚐兩種風味，滿足不同喜好，是雙重美味的絕佳選擇。',
         image: 'https://i.postimg.cc/kGY1TQT5/image.jpg', // 【新增/修改】即使是綜合，也放一張代表性圖片
+        ingredients: '烏豆沙/綠豆沙、蛋黃、麵粉、安佳無水奶油、鮮奶油、糖、黑芝麻/白芝麻 (每顆淨重 65g ± 3g)', // 【新增】主要成分
         unit: '盒'
     },
     {
@@ -831,6 +1034,7 @@ const products = [
         specialPrice: 330,
         description: '懷舊古早味，層層酥鬆餅皮，綠豆沙入口即化，選擇減糖配方，甜而不膩。',
         image: 'https://i.postimg.cc/CKpvrLsb/v5.png', // 【新增/修改】請替換
+        ingredients: '綠豆沙、麵粉、安佳無水奶油、鮮奶油、糖、新鮮火龍果汁 (淨重 65g ± 3g)', // 【新增】主要成分
         unit: '盒'
     },
     {
@@ -840,6 +1044,7 @@ const products = [
         specialPrice: 360,
         description: '獨特鹹香，香酥肉鬆與細緻綠豆沙的巧妙結合，鹹甜交織，口感豐富令人回味。',
         image: 'https://i.postimg.cc/NM4PHqTm/image.png', // 【新增/修改】請替換
+        ingredients: '綠豆沙、肉鬆、麵粉、安佳無水奶油、鮮奶油、糖、新鮮火龍果汁 (淨重 65g ± 3g)', // 【新增】主要成分
         unit: '盒'
     },
     {
@@ -847,8 +1052,10 @@ const products = [
         name: '綜合綠豆椪',
         originalPrice: 375,
         specialPrice: 345,
-        description: '純綠豆、肉鬆各3入，純粹與創新的搭配，一次擁有兩種經典綠豆椪風味。',
+        description: '純綠豆、肉鬆各3入，一次擁有兩種經典綠豆椪風味。',
         image: 'https://i.postimg.cc/4NnFm03H/image.jpg', // 【新增/修改】
+
+        ingredients: '綠豆沙、肉鬆、麵粉、安佳無水奶油、鮮奶油、糖、新鮮火龍果汁 (淨重 65g ± 3g)', // 【新增】主要成分
         unit: '盒'
     },
     {
@@ -858,6 +1065,7 @@ const products = [
         specialPrice: 360,
         description: '圓滿推薦！精選烏豆沙蛋黃酥、綠豆沙蛋黃酥及肉鬆綠豆椪各2入，一次滿足您的所有渴望。',
         image: 'https://i.postimg.cc/XqY1KHch/image.jpg', // 【新增/修改】
+        ingredients: '烏豆沙、綠豆沙、肉鬆、麵粉、安佳無水奶油、鮮奶油、糖、黑芝麻、白芝麻、新鮮火龍果汁 (淨重 65g ± 3g)', // 【新增】主要成分
         unit: '盒'
     }
 ];
@@ -894,25 +1102,29 @@ function renderProducts() {
         const productImageHtml = product.image ?
             `<div class="product-image-container"><img src="${product.image}" alt="${product.name}"></div>` :
             `<div class="product-image-placeholder"><h3>${product.name}</h3><p>圖片待補 / 綜合口味示意</p></div>`;
+ 
+       // 【新增】檢查是否有 ingredients 屬性，並生成對應的 HTML 行
+        const ingredientsHtml = product.ingredients ? 
+            `<p class="ingredients">主要成分：${product.ingredients}</p>` : '';
 
         const productCard = document.createElement('div');
         productCard.classList.add('product-card');
         productCard.innerHTML = `
             ${productImageHtml} <!-- 在這裡插入圖片或佔位符 -->
             <div class="product-content"> <!-- 新增一個 div 包裹文字內容 -->
-                <h3>${product.name}</h3>
-                <p class="description">${product.description}</p>
-                <p class="price">
-                    <span class="original-price">${isSpecialOffer ? '$' + product.originalPrice : ''}</span>
-                    <span class="special-price">${specialPricePrefix}$${product.specialPrice}</span>
-                </p>
-                <div class="quantity-control">
-                    <button data-id="${product.id}" data-action="decrease">-</button>
-                    <input type="number" value="0" min="0" data-id="${product.id}" class="product-quantity-input">
-                    <button data-id="${product.id}" data-action="increase">+</button>
-                </div>
-                <button class="btn primary-btn add-to-cart-btn" data-id="${product.id}">加入購物車</button>
+            <h3>${product.name}</h3>
+            <p class="description">${product.description}</p>
+            ${ingredientsHtml} <!-- 在這裡插入成分說明 -->
+            <p class="price">
+                <span class="original-price">${isSpecialOffer ? '$' + product.originalPrice : ''}</span>
+                <span class="special-price">${specialPricePrefix}$${product.specialPrice}</span>
+            </p>
+            <div class="quantity-control">
+                <button data-id="${product.id}" data-action="decrease">-</button>
+                <input type="number" value="0" min="0" data-id="${product.id}" class="product-quantity-input">
+                <button data-id="${product.id}" data-action="increase">+</button>
             </div>
+            <button class="btn primary-btn add-to-cart-btn" data-id="${product.id}">加入購物車</button>
         `;
         productList.appendChild(productCard);
     });
@@ -1197,7 +1409,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </script>
 </body>
 </html>
-
 
 
 
